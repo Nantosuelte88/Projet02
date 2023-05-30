@@ -8,9 +8,6 @@ reponse = requests.get(url)
 if reponse.ok:
     soup = BeautifulSoup(reponse.content, 'html.parser')
 
-#    next_element = soup.find()
-
-
 #   Début d'extraction d'infos pour un livre
     bouquins = soup.find_all('article', class_='product_pod')
     url_livres = []
@@ -26,6 +23,9 @@ if reponse.ok:
         page = requests.get(a)
         soup = BeautifulSoup(page.content, 'html.parser')
         if page.ok:
+            title = soup.h1.string
+            print(title)
+            """
             #   Début d'extraction d'infos pour un livre
             infos_tableau = []
             tds = soup.find_all('td')
@@ -43,8 +43,6 @@ if reponse.ok:
             for categorie in categories:
                 links.append(categorie.string)
             product_category = links[3]
-
-            title = soup.h1.string
 
             images = soup.find_all("img")
             image_url = []
@@ -66,7 +64,24 @@ if reponse.ok:
                 "review_rating": infos_tableau[6],
                 "image_url": test_strip
             }
+            print(dico_livres)
+            """
             #   Fin d'extraction du livre
 
+    #   verification bouton next
+    next_element = []
+    elements = soup.find_all('li', class_='next')
+    for element in elements:
+        a = element.find('a')
+        next_elt = a['href']
+        next_element.append(next_elt)
 
-            print(dico_livres)
+    next_rep = url.replace("index.html", "")
+    next_url = next_rep + next_element[0]
+    next_page = requests.get(next_url)
+    soup = BeautifulSoup(next_page.content, 'html.parser')
+    if next_page.ok:
+        print("Next ok")
+    print(next_url, "Next nope")
+
+    #   fin verification next
