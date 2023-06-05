@@ -1,7 +1,10 @@
+import csv
+
 import requests
 from bs4 import BeautifulSoup
+import csv23
 
-url = 'http://books.toscrape.com/catalogue/category/books/sequential-art_5/index.html'
+url = 'http://books.toscrape.com/catalogue/category/books/womens-fiction_9/index.html'
 
 reponse = requests.get(url)
 d = 1
@@ -71,26 +74,62 @@ if reponse.ok:
                 links.append(categorie.string)
             product_category = links[3]
 
+            title = soup.h1.string
             images = soup.find_all("img")
             image_url = []
             for image in images:
                 image_url.append(image)
             url_image = str(image_url[0])
-            test_rep = url_image.replace('img alt', "")
-            test_strip = test_rep.strip("<>=\"/ src" + title)
+            url_img = url_image[-63:-3]
+#            test_rep = url_image.replace('img alt', "")
+ #           test_strip = test_rep.strip("<>=\"/ src &amp ;," + title)
+            img_rep = url_img.replace("../../", "")
+
+
+            clean_url_img = "http://books.toscrape.com/" + img_rep
+ #           print(clean_url_img, url_image)
+
+            clean_price_icl = infos_tableau[3].strip("€$£")
+            clean_price_excl = infos_tableau[2].strip("€$£")
+            clean_numb_av = infos_tableau[5].strip("In stock() available hors")
 
             dico_livres = {
                 "product_page_url": a,
                 "upc": infos_tableau[0],
-                "title": soup.h1.string,
-                "price_including_tax": infos_tableau[3],
-                "price_excluding_tax": infos_tableau[2],
-                "number_available": infos_tableau[5],
+                "title": title,
+                "price_including_tax": clean_price_icl,
+                "price_excluding_tax": clean_price_excl,
+                "number_available": clean_numb_av,
                 "product_description": description_livres[3],
                 "product_category": links[3],
                 "review_rating": infos_tableau[6],
-                "image_url": test_strip
+                "image_url": clean_url_img
             }
-            print(dico_livres)
 
-    print("len afin de code", len(url_livres), "APRES NEXT")
+
+    # creation du fichier CSV
+            en_tete = ["product_page_url", "upc", "title", "price_including_tax", "price_excluding_tax", "number_available", "product_description", "product_category", "review_rating", "image_url"]
+            with open('testcsv', 'w') as fichier_csv:
+                writer = csv.writer(fichier_csv, delimiter=',')
+        #        writer.writerow(en_tete)
+                writer.writerow(dico_livres)
+                i = 0
+                for dico_livre in zip(dico_livres):
+                    ligne = dico_livre[i]
+                    i += 1
+                    print(ligne[i])
+"""
+    with open('testcsv.csv') as fich_csv:
+
+        reader = csv.DictReader(fich_csv, delimiter=',')
+
+        for ligne in reader:
+            print(ligne)
+"""
+#            print(dico_livres)
+#            print(test_strip,"      ", image_url[0], "\n")
+
+         #       print("len fin de code", len(url_livres), "APRES DICO")
+
+
+
