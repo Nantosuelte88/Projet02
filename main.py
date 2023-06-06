@@ -103,19 +103,26 @@ if reponse.ok:
                 "review_rating": infos_tableau[6],
                 "image_url": clean_url_img
             }
+            # telecharger l'image
+            name_url_img = url_image[-39:-3]
+            name_img = name_url_img
+            img_data = requests.get(clean_url_img).content
+            with open(name_img, 'wb') as img_tel:
+                img_tel.write(img_data)
 
-            print(dico_livres)
-
-
-
-
-"""
-            # creation du fichier CSV
-            en_tetes = ["product_page_url", "upc", "title", "price_including_tax", "price_excluding_tax", "number_available", "product_description", "product_category", "review_rating", "image_url"]
-
-            with open('test.csv', 'w', encoding='utf-8') as fichier_csv:
-                writer = csv.DictWriter(fichier_csv, fieldnames=en_tetes)
-                writer.writeheader()
-                writer.writerow(dico_livres)
-
-"""
+    """            
+                for it in dico_livres.fromkeys('title'):
+                    liste_dico.append(it)
+                    print(it)
+                print("liste dico = ", liste_dico)
+    
+    
+    
+    
+                en_tetes = ["product_page_url", "upc", "title", "price_including_tax", "price_excluding_tax", "number_available", "product_description", "product_category", "review_rating", "image_url"]
+    
+                with open('test.csv', 'w', encoding='utf-8') as fichier_csv:
+                    writer = csv.DictWriter(fichier_csv, fieldnames=en_tetes)
+                    writer.writeheader()
+                    writer.writerows(liste_dico.fromkeys())
+    """
