@@ -1,8 +1,6 @@
 import csv
-
 import requests
 from bs4 import BeautifulSoup
-import csv23
 
 url = 'http://books.toscrape.com/catalogue/category/books/womens-fiction_9/index.html'
 
@@ -107,29 +105,13 @@ if reponse.ok:
             }
 
 
-    # creation du fichier CSV
-            en_tete = ["product_page_url", "upc", "title", "price_including_tax", "price_excluding_tax", "number_available", "product_description", "product_category", "review_rating", "image_url"]
-            with open('testcsv', 'w') as fichier_csv:
-                writer = csv.writer(fichier_csv, delimiter=',')
-        #        writer.writerow(en_tete)
+            # creation du fichier CSV
+            en_tetes = ["product_page_url", "upc", "title", "price_including_tax", "price_excluding_tax", "number_available", "product_description", "product_category", "review_rating", "image_url"]
+
+            with open('test.csv', 'w', encoding='utf-8') as fichier_csv:
+                writer = csv.DictWriter(fichier_csv, fieldnames=en_tetes)
+                writer.writeheader()
                 writer.writerow(dico_livres)
-                i = 0
-                for dico_livre in zip(dico_livres):
-                    ligne = dico_livre[i]
-                    i += 1
-                    print(ligne[i])
-"""
-    with open('testcsv.csv') as fich_csv:
-
-        reader = csv.DictReader(fich_csv, delimiter=',')
-
-        for ligne in reader:
-            print(ligne)
-"""
-#            print(dico_livres)
-#            print(test_strip,"      ", image_url[0], "\n")
-
-         #       print("len fin de code", len(url_livres), "APRES DICO")
-
-
-
+#                for ligne in zip(dico_livres):
+#                    writer.writerow(dico_livres)
+                print(dico_livres)
