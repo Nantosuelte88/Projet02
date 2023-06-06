@@ -2,7 +2,7 @@ import csv
 import requests
 from bs4 import BeautifulSoup
 
-url = 'http://books.toscrape.com/catalogue/category/books/womens-fiction_9/index.html'
+url = 'https://books.toscrape.com/catalogue/category/books/travel_2/index.html'
 
 reponse = requests.get(url)
 d = 1
@@ -12,6 +12,7 @@ if reponse.ok:
     soup = BeautifulSoup(reponse.content, 'html.parser')
 
     url_livres = []
+    liste_dico = []
     while True:
         d -= 1
         title = soup.h1.string
@@ -83,7 +84,6 @@ if reponse.ok:
  #           test_strip = test_rep.strip("<>=\"/ src &amp ;," + title)
             img_rep = url_img.replace("../../", "")
 
-
             clean_url_img = "http://books.toscrape.com/" + img_rep
  #           print(clean_url_img, url_image)
 
@@ -104,7 +104,12 @@ if reponse.ok:
                 "image_url": clean_url_img
             }
 
+            print(dico_livres)
 
+
+
+
+"""
             # creation du fichier CSV
             en_tetes = ["product_page_url", "upc", "title", "price_including_tax", "price_excluding_tax", "number_available", "product_description", "product_category", "review_rating", "image_url"]
 
@@ -112,6 +117,5 @@ if reponse.ok:
                 writer = csv.DictWriter(fichier_csv, fieldnames=en_tetes)
                 writer.writeheader()
                 writer.writerow(dico_livres)
-#                for ligne in zip(dico_livres):
-#                    writer.writerow(dico_livres)
-                print(dico_livres)
+
+"""
