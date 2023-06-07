@@ -2,14 +2,184 @@ import csv
 import requests
 from bs4 import BeautifulSoup
 
-url = 'https://books.toscrape.com/catalogue/category/books/travel_2/index.html'
+url = 'https://books.toscrape.com/'
 
 reponse = requests.get(url)
 d = 1
 n = 1
 e = 0
+
 if reponse.ok:
     soup = BeautifulSoup(reponse.content, 'html.parser')
+
+    url_category = []
+    lk_cat = []
+    ulcat = soup.find('ul', class_='nav')
+#    print(ulcat)
+    acat = ulcat.find_all('a')
+#    print(acat)
+    print(len(acat))
+    for a in acat:
+        lk = a['href']
+        urlcatcln = url + lk
+        url_category.append(urlcatcln)
+    print(url_category)
+    print(len(url_category))
+
+
+
+  #      print(url_category)
+
+
+
+"""
+
+len a 1
+    url_category = []
+    list_cat_li = []
+    licat = []
+    lilicat = []
+    ulcat = soup.find_all('ul', class_='nav nav-list')
+    print("Len de ulcat :", len(ulcat))
+    for li in ulcat:
+        lt = li.find('li')
+        licat.append(lt)
+#        print("Len de licat : ", len(licat), licat[0])
+    for ul in licat:
+        lct = ul.find('ul')
+        lilicat.append(lct)
+    print("Len de lilicat : ", len(lilicat), lct)
+    for li in lilicat:
+        lctl = li.find_all('li')
+        list_cat_li.append(lctl)
+        print(lctl, "\n\n Len de list_cat_li : ", len(list_cat_li) )
+
+
+
+
+
+
+
+
+
+    url_category = []
+    list_cat_li = []
+    licat = []
+    lilicat = []
+    ulcat = soup.find_all('ul', class_='nav nav-list')
+    print("Len de ulcat :", len(ulcat))
+    for ul in ulcat:
+        lt = ul.find('li')
+#        licat.append(lt)
+    print("Len de licat : ", len(lt), licat)
+    for ul in lt:
+        lct = ul.find_all('a')
+        lilicat.append(lct)
+
+    print("Len de lilicat : ", len(lilicat), lilicat)
+
+
+
+
+
+
+
+
+
+
+    url_category = []
+    list_cat_li = []
+    ulcat = soup.find_all('ul', class_='nav nav-list')
+    for ul in ulcat:
+        licat = ul.find('li')
+        for il in licat:
+            deuxul = licat.find('ul')
+            for li in deuxul:
+                lis = deuxul.find_all('li')
+                list_cat_li.append(lis)
+    print(list_cat_li, len(list_cat_li))
+
+
+
+
+
+
+
+
+  url_category = []
+    list_cat_li = []
+    licat = []
+    lilicat = []
+    ulincat = []
+    ulcat = soup.find_all('ul', class_='nav nav-list')
+    print("Len de ulcat :", len(ulcat))
+    for il in ulcat:
+        lt = il.find('li')
+        licat.append(lt)
+        print("Len de licat : ", len(lt), licat)
+        for ul in licat:
+            lpi = licat.find('li')
+            list_cat_li.append(lpi)
+    print("Len de list_cat_li", len(list_cat_li))
+
+
+
+
+
+
+
+
+
+marche
+    url_category = []
+    list_cat_li = []
+    licat = []
+    lilicat = []
+    ulcat = soup.find_all('ul', class_='nav nav-list')
+    print("Len de ulcat :", len(ulcat))
+    for ul in ulcat:
+        lt = ul.find('li')
+        licat.append(lt)
+    print("Len de licat : ", len(lt), licat)
+    for ul in licat:
+        lct = ul.find('a')
+        lilicat.append(lct)
+    print("Len de lilicat : ", len(lilicat), lilicat)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    url_category = []
+    list_cat_li = []
+    ulcat = soup.find_all('ul', class_='nav nav-list')
+    for ul in ulcat:
+        licat = ul.find('li')
+        for il in licat:
+            deuxul = licat.find('ul')
+            for li in deuxul:
+                lis = deuxul.find_all('li')
+
+    print("len de lis : ", len(lis), "\n", lis)
+ #   print("len de lia : ", len(lia))
+
+
+
+
+
+
+
+
 
     url_livres = []
     liste_dico = []
@@ -105,7 +275,7 @@ if reponse.ok:
                 "review_rating": infos_tableau[6],
                 "image_url": clean_url_img
             }
-            print(b, e, len(dico_livres), len(url_livres), "\n")
+#            print(b, e, len(dico_livres), len(url_livres), "\n")
             liste_dico.append(dico_livres)
 #            print(liste_dico, "\n\n")
             en_tetes = ["product_page_url", "upc", "title", "price_including_tax", "price_excluding_tax",
@@ -119,6 +289,7 @@ if reponse.ok:
                     writer.writeheader()
                     for elem in liste_dico:
                         writer.writerow(elem)
+                    print("CSV OK", len(liste_dico))
             except:
                 print("NOPE")
 
@@ -126,7 +297,17 @@ if reponse.ok:
 
 
 
-            """
+
+
+
+
+
+
+
+
+
+
+
 
             
             testeuh = [
