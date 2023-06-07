@@ -105,16 +105,28 @@ if reponse.ok:
                 "review_rating": infos_tableau[6],
                 "image_url": clean_url_img
             }
-            print(b, e, len(dico_livres), len(url_livres), "\n", dico_livres, "\n")
-            liste_dico.append([dico_livres])
-  #          print(liste_dico)
+            print(b, e, len(dico_livres), len(url_livres), "\n")
+            liste_dico.append(dico_livres)
+#            print(liste_dico, "\n\n")
             en_tetes = ["product_page_url", "upc", "title", "price_including_tax", "price_excluding_tax",
                         "number_available", "product_description", "product_category", "review_rating", "image_url"]
             nom_csv = str(links[3]) + ".csv"
             # Creation fichier CSV
 
+            try:
+                with open(nom_csv, 'w', encoding='utf-8') as f:
+                    writer = csv.DictWriter(f, fieldnames=en_tetes)
+                    writer.writeheader()
+                    for elem in liste_dico:
+                        writer.writerow(elem)
+            except:
+                print("NOPE")
 
 
+
+
+
+            """
 
             
             testeuh = [
@@ -139,7 +151,7 @@ if reponse.ok:
 
 
 
-"""
+
 
             with open('test.csv', 'w', encoding='utf-8') as fichier_csv:
                 writer = csv.writer(fichier_csv, delimiter=',')
