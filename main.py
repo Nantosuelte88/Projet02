@@ -23,8 +23,16 @@ if reponse.ok:
         lk = a['href']
         urlcatcln = url + lk
         url_category.append(urlcatcln)
+    print("Len de url_category AVANT del: ",len(url_category))
+    del url_category[0]
+    print("Len de url_category APRES del: ",len(url_category))
     print(url_category)
-    print(len(url_category))
+    for a in url_category:
+        pagecat = requests.get(a)
+        soup = BeautifulSoup(pagecat.content, 'html.parser')
+        if pagecat.ok:
+            title_cat = soup.h1.string
+            print(title_cat)
 
 
 
@@ -33,145 +41,6 @@ if reponse.ok:
 
 
 """
-
-len a 1
-    url_category = []
-    list_cat_li = []
-    licat = []
-    lilicat = []
-    ulcat = soup.find_all('ul', class_='nav nav-list')
-    print("Len de ulcat :", len(ulcat))
-    for li in ulcat:
-        lt = li.find('li')
-        licat.append(lt)
-#        print("Len de licat : ", len(licat), licat[0])
-    for ul in licat:
-        lct = ul.find('ul')
-        lilicat.append(lct)
-    print("Len de lilicat : ", len(lilicat), lct)
-    for li in lilicat:
-        lctl = li.find_all('li')
-        list_cat_li.append(lctl)
-        print(lctl, "\n\n Len de list_cat_li : ", len(list_cat_li) )
-
-
-
-
-
-
-
-
-
-    url_category = []
-    list_cat_li = []
-    licat = []
-    lilicat = []
-    ulcat = soup.find_all('ul', class_='nav nav-list')
-    print("Len de ulcat :", len(ulcat))
-    for ul in ulcat:
-        lt = ul.find('li')
-#        licat.append(lt)
-    print("Len de licat : ", len(lt), licat)
-    for ul in lt:
-        lct = ul.find_all('a')
-        lilicat.append(lct)
-
-    print("Len de lilicat : ", len(lilicat), lilicat)
-
-
-
-
-
-
-
-
-
-
-    url_category = []
-    list_cat_li = []
-    ulcat = soup.find_all('ul', class_='nav nav-list')
-    for ul in ulcat:
-        licat = ul.find('li')
-        for il in licat:
-            deuxul = licat.find('ul')
-            for li in deuxul:
-                lis = deuxul.find_all('li')
-                list_cat_li.append(lis)
-    print(list_cat_li, len(list_cat_li))
-
-
-
-
-
-
-
-
-  url_category = []
-    list_cat_li = []
-    licat = []
-    lilicat = []
-    ulincat = []
-    ulcat = soup.find_all('ul', class_='nav nav-list')
-    print("Len de ulcat :", len(ulcat))
-    for il in ulcat:
-        lt = il.find('li')
-        licat.append(lt)
-        print("Len de licat : ", len(lt), licat)
-        for ul in licat:
-            lpi = licat.find('li')
-            list_cat_li.append(lpi)
-    print("Len de list_cat_li", len(list_cat_li))
-
-
-
-
-
-
-
-
-
-marche
-    url_category = []
-    list_cat_li = []
-    licat = []
-    lilicat = []
-    ulcat = soup.find_all('ul', class_='nav nav-list')
-    print("Len de ulcat :", len(ulcat))
-    for ul in ulcat:
-        lt = ul.find('li')
-        licat.append(lt)
-    print("Len de licat : ", len(lt), licat)
-    for ul in licat:
-        lct = ul.find('a')
-        lilicat.append(lct)
-    print("Len de lilicat : ", len(lilicat), lilicat)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    url_category = []
-    list_cat_li = []
-    ulcat = soup.find_all('ul', class_='nav nav-list')
-    for ul in ulcat:
-        licat = ul.find('li')
-        for il in licat:
-            deuxul = licat.find('ul')
-            for li in deuxul:
-                lis = deuxul.find_all('li')
-
-    print("len de lis : ", len(lis), "\n", lis)
- #   print("len de lia : ", len(lia))
 
 
 
