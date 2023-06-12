@@ -132,7 +132,8 @@ if reponse.ok:
                                 "price_excluding_tax",
                                 "number_available", "product_description", "product_category", "review_rating",
                                 "image_url"]
-                    nom_csv = str(links[3]) + ".csv"
+                    nom_csv_rep = str(links[3]) + ".csv"
+                    nom_csv = nom_csv_rep.replace(" ", "_")
 
                     try:
                         with open(nom_csv, 'w', encoding='utf-8') as f:
@@ -157,8 +158,16 @@ if reponse.ok:
                     # Telechargement des images
                     chem_cat_sl = nom_dos_cat + "/"
                     chem_cat = chem_cat_sl
-                    name_url_img = url_image[-39:-3]
-                    name_img = chem_cat + name_url_img
+                    name_url_img = str(title).replace(" ", "_")
+#                    name_url_img = url_image[-39:-3]
+                    print(name_url_img)
+                    x = ""
+                    y = ""
+                    z = "&é~\"#'’{([-|è`\\^à@)]=}$¤$¨^%ù*µ!§/:.;?,*€+äëüïöÿ"
+                    mytable = str.maketrans(x, y, z)
+                    nom_image = name_url_img.translate(mytable)
+                    name_jpg = nom_image + ".jpg"
+                    name_img = chem_cat + name_jpg
                     print(name_img)
                     img_data = requests.get(clean_url_img).content
                     with open(name_img, 'wb') as img_tel:
