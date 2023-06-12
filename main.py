@@ -1,5 +1,4 @@
 import csv
-
 import requests
 from bs4 import BeautifulSoup
 import os
@@ -15,11 +14,8 @@ u = 0
 if reponse.ok:
     soup = BeautifulSoup(reponse.content, 'html.parser')
 
-
-
     if not os.path.exists("images"):
         os.mkdir("images")
-    # DEBUT BON CODE
     #   Enregistrement des urls de categories
     url_category = []
     lk_cat = []
@@ -44,7 +40,7 @@ if reponse.ok:
             print("\n", "IIIIICCCIIII", a, "\n")
             url_cat_next = a
             print("\n", "HUPHUHP", url_cat_next, "\n")
-            #           Boucle qui permet de verifier les urls des livres ainsi que les pages next
+            # Boucle qui permet de verifier les urls des livres ainsi que les pages next
             while True:
                 d -= 1
                 title = soup.h1.string
@@ -79,13 +75,13 @@ if reponse.ok:
                     break
                 b = 0
                 e += 1
-            #           Pour chaque url de livre nous allons dans la page pour recupèrer les infos de celui ci
+            # Pour chaque url de livre nous allons dans la page pour recupèrer les infos de celui ci
             for a in url_livres:
                 page = requests.get(a)
                 soup = BeautifulSoup(page.content, 'html.parser')
                 b = + 1
                 if page.ok:
-                    #   Début d'extraction d'infos pour un livre
+                    # Début d'extraction d'infos pour un livre
                     infos_tableau = []
                     tds = soup.find_all('td')
                     for td in tds:
@@ -129,33 +125,38 @@ if reponse.ok:
                         "review_rating": infos_tableau[6],
                         "image_url": clean_url_img
                     }
+                    # Creation des fichiers CSV
                     nom_category = str(links[3])
-
-
-
-                    #            print(b, e, len(dico_livres), len(url_livres), "\n")
                     liste_dico.append(dico_livres)
-                    #            print(liste_dico, "\n\n")
                     en_tetes = ["product_page_url", "upc", "title", "price_including_tax",
                                 "price_excluding_tax",
                                 "number_available", "product_description", "product_category", "review_rating",
                                 "image_url"]
                     nom_csv = str(links[3]) + ".csv"
-                    # FIN BON CODE
+
+                    try:
+                        with open(nom_csv, 'w', encoding='utf-8') as f:
+                            writer = csv.DictWriter(f, fieldnames=en_tetes)
+                            writer.writeheader()
+                            for elem in liste_dico:
+                                writer.writerow(elem)
+                            print("CSV OK", len(liste_dico))
+                    except:
+                        print("NOPE")
 
                     print("len de liste_dico", len(liste_dico))
 
-            # Telechargement des images et creation des dossiers
-
+                    # Creation des dossiers
                     u += 1
                     nom_cat_rep = nom_category.replace(" ", "_")
                     nom_dos_cat = "images/" + nom_cat_rep
                     if not os.path.exists(nom_dos_cat):
                         print("Dossier de cat n'existe pas, creation", )
                         os.mkdir(nom_dos_cat)
+
+                    # Telechargement des images
                     chem_cat_sl = nom_dos_cat + "/"
                     chem_cat = chem_cat_sl
-
                     name_url_img = url_image[-39:-3]
                     name_img = chem_cat + name_url_img
                     print(name_img)
@@ -170,36 +171,17 @@ if reponse.ok:
 
 
 
+
+
+
+
 """
 
-                
-                
-                    test = os.path.exists(bon_doss)
-                    if test:
-                        path_name = d
-                        print("OUII le dossier existe deja", path_name)
-                        s = 0
-
-                        for i in listeuh:
-                            s += 1
-                            nom_f = listdeux[s] + ".txt"
-                            chem_img_cat = "images/" + path_name
-                            sl_chm_cat = chem_img_cat + "/"
-                            chem = sl_chm_cat + nom_f
-                            print(chem)
-                            with open(chem, 'w') as f:
-                                print("fichier ok", s)
-                                print("u = ", u)
-                                print(nom_f)
-
-                        print("Break de while verif dossiers")
-                        break
-                    else:
-                        print("NOOON il ,n'existe pas, creation du dossier")
-                        os.mkdir(bon_doss)
-            print("Break de while verif dossier images ")
-            break
-
+                    #                   name_url_img = title.replace(" ", "_")
+                    #                   name_url_strip = name_url_img.strip("&é~\"#'{([-|è`\\^à@)]=}$¤$¨^%ù*µ!§/:.;?,*€")
+                    #                    name_url_strip = name_url_img.strip("' \" , ; . : ! ? / \\ » # - [ ] > < % * @ = & ^· ( ) é è ê ä ç")
+                    #                    print(name_url_strip)
+                    #                    name_url_restrip = name_url_strip.strip(",:# ")
 
 
     
