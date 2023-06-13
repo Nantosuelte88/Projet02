@@ -2,7 +2,6 @@ import csv
 import requests
 from bs4 import BeautifulSoup
 import os
-from pathlib import Path
 
 url = 'https://books.toscrape.com/'
 
@@ -23,12 +22,14 @@ if reponse.ok:
         lk = a['href']
         urlcatcln = url + lk
         url_category.append(urlcatcln)
+
     # Suppression de la premiere information récolté (ici la page index.html)
     del url_category[0]
     # Pour chaque lien dans url_category, on visite la page
     for a in url_category:
         pagecat = requests.get(a)
         soup = BeautifulSoup(pagecat.content, 'html.parser')
+
         if pagecat.ok:
             url_livres = []
             liste_dico = []
@@ -112,22 +113,7 @@ if reponse.ok:
                     # Creation des fichiers CSV
                     nom_category = str(links[3])
                     liste_dico.append(dico_livres)
-                    en_tetes = ["product_page_url", "upc", "title", "price_including_tax",
-                                "price_excluding_tax",
-                                "number_available", "product_description", "product_category", "review_rating",
-                                "image_url"]
-                    nom_csv_rep = str(links[3]) + ".csv"
-                    nom_csv = nom_csv_rep.replace(" ", "_")
-
-                    try:
-                        with open(nom_csv, 'w', encoding='utf-8') as f:
-                            writer = csv.DictWriter(f, fieldnames=en_tetes)
-                            writer.writeheader()
-                            for elem in liste_dico:
-                                writer.writerow(elem)
-                            print("Création csv", len(liste_dico), " de la catégorie : ", nom_category, " Livre : ", title)
-                    except:
-                        print("échec de la creation du csv")
+                    print("Livre ", title, " ajouté à la liste ")
 
                     # Creation des dossiers
                     nom_cat_rep = nom_category.replace(" ", "_")
@@ -154,3 +140,21 @@ if reponse.ok:
                         print("Image du livre ", title, "créé.")
                     except:
                         print("échec de la creation de l'image du livre ", title)
+
+
+            en_tetes = ["product_page_url", "upc", "title", "price_including_tax",
+                        "price_excluding_tax",
+                        "number_available", "product_description", "product_category", "review_rating",
+                        "image_url"]
+            nom_csv_rep = str(links[3]) + ".csv"
+            nom_csv = nom_csv_rep.replace(" ", "_")
+
+            try:
+                with open(nom_csv, 'w', encoding='utf-8') as f:
+                    writer = csv.DictWriter(f, fieldnames=en_tetes)
+                    writer.writeheader()
+                    for elem in liste_dico:
+                        writer.writerow(elem)
+                    print("Création csv", len(liste_dico), " de la catégorie : ", elem['product_category'], " Livre : ", title)
+            except:
+                print("échec de la creation du csv")
