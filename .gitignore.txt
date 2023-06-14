@@ -12,3 +12,4 @@ venv.bak/
 
 # Fichier.s créé.s
 image/
+Testeuuh.txt
