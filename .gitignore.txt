@@ -11,6 +11,5 @@ env.bak/
 venv.bak/
 
 # Fichier.s créé.s
-image/
+images/
 *.csv
-Testeuuh.txt
