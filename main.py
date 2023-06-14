@@ -10,7 +10,7 @@ reponse = requests.get(url)
 if reponse.ok:
     soup = BeautifulSoup(reponse.content, 'html.parser')
 
-    # Si le dossier "images" n'existe pas nous le créeons
+    # Si le dossier "images" n'éxiste pas nous le créons
     if not os.path.exists("images"):
         os.mkdir("images")
     # Enregistrement des urls de categories
@@ -24,7 +24,7 @@ if reponse.ok:
         urlcatcln = url + lk
         url_category.append(urlcatcln)
 
-    # Suppression de la premiere information récolté (ici la page index.html)
+    # Suppression de la premiere information récoltée (ici la page index.html)
     del url_category[0]
     # Pour chaque lien dans url_category, on visite la page
     for a in url_category:
@@ -51,7 +51,7 @@ if reponse.ok:
                 if (len(bouquins)) >= 20:
                     # Recherche de bouton next
                     elements = soup.find('li', class_='next')
-                    # Si le bouton next exist nous extrayons le href puis le concatenons dans l'url de la page, en prenant soin d'enlever le index.html
+                    # Si le bouton next existe nous extrayons le href puis le concatenons dans l'url de la page, en prenant soin d'enlever le index.html
                     if elements:
                         next_rep = url_cat_next.replace("index.html", "")
                         url_elm = elements.find("a")
@@ -107,7 +107,7 @@ if reponse.ok:
                     clean_price_excl = infos_tableau[2].strip("€$£")
                     clean_numb_av = infos_tableau[5].strip("In stock() available hors stock")
 
-                    # Engistrement des informations récupérees dans un dictionnaire
+                    # Engistrement des informations récupérées dans un dictionnaire
                     dico_livres = {
                         "product_page_url": urlb,
                         "upc": infos_tableau[0],
@@ -123,14 +123,14 @@ if reponse.ok:
                     # Creation des fichiers CSV
                     nom_category = str(links[3])
                     liste_dico.append(dico_livres)
-                    print("Livre n°", len(liste_dico), " ajouté à la liste ")
+                    print("Livre n°", len(liste_dico), "ajouté à la liste ")
 
                     # Creation des dossiers
                     nom_cat_rep = nom_category.replace(" ", "_")
                     nom_dos_cat = "images/" + nom_cat_rep
-                    # si le dossier n'existe pas, il est créé
+                    # Si le dossier n'existe pas, il est créé
                     if not os.path.exists(nom_dos_cat):
-                        print("\n\nCréation du dossier de la catégorie  ", nom_category)
+                        print("Création du dossier de la catégorie  ", nom_category)
                         os.mkdir(nom_dos_cat)
 
                     # Téléchargement des images, mise en place du chemin de dossier
@@ -167,6 +167,6 @@ if reponse.ok:
                     writer.writeheader()
                     for elem in liste_dico:
                         writer.writerow(elem)
-                    print("Création du CSV de la catégorie :", elem['product_category'], ". Nombre de livre.s traité.s : ", len(liste_dico))
+                    print("\nCréation du CSV de la catégorie :", elem['product_category'], ".Nombre de livre.s traité.s : ", len(liste_dico), "\n\n")
             except:
                 print("échec de la creation du csv")
