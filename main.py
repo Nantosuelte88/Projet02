@@ -162,11 +162,10 @@ if reponse.ok:
             nom_csv = nom_csv_rep.replace(" ", "_")
 
             try:
-                with open(nom_csv, 'w', encoding='utf-8') as f:
+                with open(nom_csv, 'w', encoding='utf-8', newline='') as f:
                     writer = csv.DictWriter(f, fieldnames=en_tetes)
                     writer.writeheader()
-                    for elem in liste_dico:
-                        writer.writerow(elem)
-                    print("\nCréation du CSV de la catégorie :", elem['product_category'], ".Nombre de livre.s traité.s : ", len(liste_dico), "\n\n")
+                    writer.writerows(liste_dico)
+                    print("\nCréation du CSV de la catégorie :", nom_csv_rep.replace(".csv", ""), ". Nombre de livre.s traité.s :", len(liste_dico), "\n\n")
             except:
                 print("échec de la creation du csv")
