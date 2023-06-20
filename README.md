@@ -14,12 +14,16 @@ Depuis le terminal :
 - pour créer l'environnement :
 	+ **python -m venv env**
 - pour l'activer :
-	+ **source env/bon/activate**
- - **OU**  pour Windows :		
-	+ **env\Scripts\activate.bat**
-	+ ( Attention ! pas de ".bat" sous Powershell )
+	- Sur Unix et MacOS : 
+		+ **source env/bon/activate**
+	 - Sur Windows (Attention! pas de ".bat" sous Powershell) :		
+		+ **env\Scripts\activate.bat**
 
 Maintenant que l'environnement virtuel est crée et activé nous pouvons installer les packages requis:
 - **pip install -r requirements.txt**
 
-Voilà, les packages sont installés dans les bonnes versions, vous pouvez maintenant exécuter le code ! :smile:
+Pour executer le code :
+
+- **python main.py**
+
+Lorsque que le programme s'exécutera vous pourrez voir des messages indiquant le nombre de livres traités, le titre du livre quand l'image s'enregistre, ainsi que le nom de la catégorie et le nombre de livres enregistrés dans le CSV :smile:
