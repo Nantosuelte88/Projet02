@@ -140,7 +140,7 @@ if reponse.ok:
                     # Vefication et effacement des caracteres speciaux si besoin, pour avoir un nom valide pour les images
                     x = ""
                     y = ""
-                    z = "&é~\"#'’{([-|è`\\^à@)]=}$¤$¨^%ù*µ!§/:.;?,*€+äëüïöÿ"
+                    z = "&é~\"#'’{([-|è`\\^à@)]=}$¤$¨^%ù*µ!§/:.;?,*€+äëüïöÿ“á”"
                     mytable = str.maketrans(x, y, z)
                     nom_image = name_url_img.translate(mytable)
                     name_jpg = nom_image + ".jpg"
