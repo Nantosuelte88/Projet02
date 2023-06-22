@@ -120,7 +120,7 @@ if reponse.ok:
                         "review_rating": infos_tableau[6],
                         "image_url": clean_url_img
                     }
-                    # Creation des fichiers CSV
+
                     nom_category = str(links[3])
                     liste_dico.append(dico_livres)
                     print("Livre n°", len(liste_dico), "ajouté à la liste ")
